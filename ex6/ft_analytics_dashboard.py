@@ -70,10 +70,6 @@ def main() -> None:
                           in player_achievements.items()}
     print(f"Achievement counts: {achievement_counts}")
 
-    score_to_player = {score: player for player, score
-                       in player_scores.items()}
-    print(f"Score to player mapping: {score_to_player}")
-
     print()
     print("=== Set Comprehension Examples ===")
 
@@ -108,30 +104,31 @@ def main() -> None:
     avg_score = sum(player_scores.values()) / len(player_scores)
     print(f"Average score: {avg_score:.1f}")
 
-    top_scorer = max(player_scores.items(), key=lambda x: x[1])
-    
+    def get_score(item):
+        return item[1]
+
+    top_scorer = max(player_scores.items(), key=get_score)
 
     print(f"Top performer: {top_scorer[0]} ({top_scorer[1]} points, "
           f"{len(player_achievements.get(top_scorer[0], []))} achievements)")
-    
+
     print()
     print("=== Nested Comprehensions (Advanced) ===")
-    
 
     player_achievement_pairs = [
         (player, achievement)
         for player, achievements in player_achievements.items()
         for achievement in achievements
     ]
-    print(f"Total (player, achievement) pairs: {len(player_achievement_pairs)}")
-    
+    print(f"Total (player, achievement)"
+          f"pairs: {len(player_achievement_pairs)}")
+
     players_by_category = {
         'high': [p for p, s in player_scores.items() if s >= 2000],
         'medium': [p for p, s in player_scores.items() if 1800 <= s < 2000],
         'low': [p for p, s in player_scores.items() if s < 1800]
     }
     print(f"Players by category: {players_by_category}")
-
 
 
 if __name__ == "__main__":
